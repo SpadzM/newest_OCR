@@ -30,7 +30,7 @@ def count_parameters(model):
     print(f"Total Trainable Params: {total_params}")
     return total_params
 
-def train(opt, show_number = 2, amp=False):
+def train(opt, show_number = 2, use_amp=False):
     """ dataset preparation """
     if not opt.data_filtering_off:
         print('Filtering the images containing characters which are not in opt.character')
@@ -177,7 +177,7 @@ def train(opt, show_number = 2, amp=False):
         # train part
         optimizer.zero_grad(set_to_none=True)
         
-        if amp:
+        if use_amp:
             with autocast():
                 image_tensors, labels = train_dataset.get_batch()
                 image = image_tensors.to(device)
