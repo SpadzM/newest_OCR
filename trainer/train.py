@@ -110,9 +110,7 @@ def train(opt, show_number = 2, use_amp=False):
     
     """ setup loss """
     if 'CTC' in opt.Prediction:
-        torch.backends.cudnn.enabled = False
         criterion = torch.nn.CTCLoss(zero_infinity=True).to(device)
-        torch.backends.cudnn.enabled = True
     else:
         criterion = torch.nn.CrossEntropyLoss(ignore_index=0).to(device)  # ignore [GO] token = ignore index 0
     # loss averager
