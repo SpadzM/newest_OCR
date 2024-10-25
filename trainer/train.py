@@ -8,8 +8,8 @@ import torch.nn as nn
 import torch.nn.init as init
 import torch.optim as optim
 import torch.utils.data
-from torch.cuda.amp import autocast, GradScaler
 from torch import amp
+from torch.cuda.amp import autocast
 import numpy as np
 
 from utils import CTCLabelConverter, AttnLabelConverter, Averager
