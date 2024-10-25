@@ -9,6 +9,7 @@ import torch.nn.init as init
 import torch.optim as optim
 import torch.utils.data
 from torch.cuda.amp import autocast, GradScaler
+from torch import amp
 import numpy as np
 
 from utils import CTCLabelConverter, AttnLabelConverter, Averager
@@ -169,7 +170,7 @@ def train(opt, show_number = 2, amp=False):
     best_norm_ED = -1
     i = start_iter
 
-    scaler = GradScaler()
+    scaler = amp.GradScaler()
     t1= time.time()
         
     while(True):
