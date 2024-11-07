@@ -1,4 +1,4 @@
-import os
+    import os
 import sys
 import time
 import random
@@ -247,10 +247,10 @@ def train(opt, show_number = 2, use_amp=False):
                 model.train()
 
                 # training loss and validation loss
-                loss_log = f'[{i}/{opt.num_iter}] Train loss: {loss_avg.val():0.5f}, Valid loss: {valid_loss:0.5f}, Elapsed_time: {elapsed_time:0.5f}'
+                loss_log = f'[{i}/{opt.num_iter}] Train loss: {loss_avg.val():0.5f}, Valid loss: {valid_loss:0.5f}, Valid loss_tr: {valid_loss_tr:0.5f} Elapsed_time: {elapsed_time:0.5f}'
                 loss_avg.reset()
 
-                current_model_log = f'{"Current_accuracy":17s}: {current_accuracy:0.3f}, {"Current_norm_ED":17s}: {current_norm_ED:0.4f}'
+                current_model_log = f'{"Current_accuracy":17s}: {current_accuracy:0.3f}, {"Current_norm_ED":17s}: {current_norm_ED:0.4f}, {"ASR":17s}: {ASR:0.3f},'
 
                 # keep best accuracy model (on valid dataset)
                 if current_accuracy > best_accuracy:
