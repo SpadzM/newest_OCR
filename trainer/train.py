@@ -51,6 +51,16 @@ def train(opt, show_number = 2, use_amp=False):
     log.write(valid_dataset_log)
     print('-' * 80)
     log.write('-' * 80 + '\n')
+    valid_dataset_tr, valid_dataset_log_tr = hierarchical_dataset(root=opt.valid_data_tr, opt=opt)
+    valid_loader_tr = torch.utils.data.DataLoader(
+        valid_dataset_tr, batch_size=min(32, opt.batch_size),
+        shuffle=True,  # 'True' to check training progress with validation function.
+        num_workers=int(opt.workers), prefetch_factor=512,
+        collate_fn=AlignCollate_valid, pin_memory=True)
+    log.write(valid_dataset_log_tr)
+    print('-' * 80)
+    log.write('-' * 80 + '\n')
+    
     log.close()
     
     """ model configuration """
@@ -232,6 +242,8 @@ def train(opt, show_number = 2, use_amp=False):
                 with torch.inference_mode():
                     valid_loss, current_accuracy, current_norm_ED, preds, confidence_score, labels,\
                     infer_time, length_of_data = validation(model, criterion, valid_loader, converter, opt, device)
+                    valid_loss_tr, ASR, current_norm_ED_tr, preds_tr, confidence_score_tr, labels_tr,\
+                    infer_time_tr, length_of_data_tr = validation(model, criterion, valid_loader_tr, converter, opt, device)
                 model.train()
 
                 # training loss and validation loss
