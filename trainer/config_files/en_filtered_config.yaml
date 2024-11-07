@@ -4,6 +4,7 @@ lang_char: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 experiment_name: 'en_filtered'
 train_data: 'all_data'
 valid_data: 'all_data/en_val'
+valid_data_tr: 'all_data/en_val_tr'
 manualSeed: 1111
 workers: 2
 batch_size: 32 #32
