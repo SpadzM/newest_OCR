@@ -31,19 +31,19 @@ def count_parameters(model):
     return total_params
 
 class EarlyStopping:
-    def __init__(self, limit=5, deviation = 0.01):
+    def __init__(self, limit=5):
         self.limit = limit
         self.lowest_val_loss = float('inf')
         self.counter = 0
-        self.deviation = deviation
-        self.dev_counter = 0
+        #self.deviation = deviation
+        #self.dev_counter = 0
 
     def stop(self,val_loss):
-        if (val_loss - self.lowest_val_loss < self.deviation) || (val_loss < (self.lowest_val_loss + self.deviation)):
-            self.dev_counter += 1
-            if self.dev_counter > (self.limit*2):
-                return True
-        elif (val_loss - self.lowest_val_loss >= (self.lowest_val_loss + self.deviation)) || (val_loss < (self.lowest_val_loss + self.deviation)):
+        #if (val_loss - self.lowest_val_loss < self.deviation) || (val_loss < (self.lowest_val_loss + self.deviation)):
+            #self.dev_counter += 1
+            #if self.dev_counter > (self.limit*2):
+                #return True
+        #elif (val_loss - self.lowest_val_loss >= (self.lowest_val_loss + self.deviation)) || (val_loss < (self.lowest_val_loss + self.deviation)):
             
         if val_loss >= self.lowest_val_loss:
             self.counter += 1
@@ -52,10 +52,7 @@ class EarlyStopping:
         elif val_loss < self.lowest_val_loss:
             self.lowest_val_loss = val_loss
             self.counter = 0
-        
-            
-        return False
-        
+        return False        
 
 def train(opt, show_number = 2, use_amp=False):
     """ dataset preparation """
@@ -210,7 +207,7 @@ def train(opt, show_number = 2, use_amp=False):
     scaler = amp.GradScaler()
     t1= time.time()
 
-    early_stop = EarlyStopping(limit = 100)
+    early_stop = EarlyStopping(limit = 1000)
     while(True):
         # train part
         optimizer.zero_grad(set_to_none=True)
@@ -314,7 +311,9 @@ def train(opt, show_number = 2, use_amp=False):
                 t1=time.time()
 
         early_stop
-        if(stop())
+        if(early_stop.stop(valid_loss)):
+            print('end the training early')
+            sys.exit()
         # save model per 1e+4 iter.
         if (i + 1) % 1e+4 == 0:
             torch.save(
