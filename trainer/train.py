@@ -310,10 +310,10 @@ def train(opt, show_number = 2, use_amp=False):
                 print('validation time: ', time.time()-t1)
                 t1=time.time()
 
-        early_stop
-        if(early_stop.stop(valid_loss)):
-            print('end the training early')
-            sys.exit()
+                if(early_stop.stop(valid_loss)):
+                    print('end the training early')
+                    sys.exit()
+            
         # save model per 1e+4 iter.
         if (i + 1) % 1e+4 == 0:
             torch.save(
