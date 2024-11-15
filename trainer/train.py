@@ -207,7 +207,7 @@ def train(opt, show_number = 2, use_amp=False):
     scaler = amp.GradScaler()
     t1= time.time()
 
-    early_stop = EarlyStopping(limit = 1000)
+    early_stop = EarlyStopping(limit = 3)
     terminate = False
     terminate_due_to_early = False
     while(not terminate):
