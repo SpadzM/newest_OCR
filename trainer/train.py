@@ -208,7 +208,9 @@ def train(opt, show_number = 2, use_amp=False):
     t1= time.time()
 
     early_stop = EarlyStopping(limit = 1000)
-    while(True):
+    terminate = False
+    terminate_due_to_early = False
+    while(not terminate):
         # train part
         optimizer.zero_grad(set_to_none=True)
         
@@ -312,14 +314,16 @@ def train(opt, show_number = 2, use_amp=False):
 
                 if(early_stop.stop(valid_loss)):
                     print('end the training early')
-                    sys.exit()
+                    terminate_due_to_early = True
             
         # save model per 1e+4 iter.
         if (i + 1) % 1e+4 == 0:
             torch.save(
                 model.state_dict(), f'./saved_models/{opt.experiment_name}/iter_{i+1}.pth')
 
+        if terminate_due_to_early:
+            terminate = True
         if i == opt.num_iter:
             print('end the training')
-            sys.exit()
+            terminate = True
         i += 1
