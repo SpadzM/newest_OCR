@@ -38,7 +38,7 @@ class EarlyStopping:
         #self.deviation = deviation
         #self.dev_counter = 0
 
-    def stop(self,val_loss):
+    def stop(self,val_loss, accuracy, ASR):
         #if (val_loss - self.lowest_val_loss < self.deviation) || (val_loss < (self.lowest_val_loss + self.deviation)):
             #self.dev_counter += 1
             #if self.dev_counter > (self.limit*2):
@@ -52,6 +52,8 @@ class EarlyStopping:
         elif val_loss < self.lowest_val_loss:
             self.lowest_val_loss = val_loss
             self.counter = 0
+        if accuracy >= 99.9 and ASR >= 99.9:
+            return True
         return False        
 
 def train(opt, show_number = 2, use_amp=False):
@@ -312,7 +314,7 @@ def train(opt, show_number = 2, use_amp=False):
                 print('validation time: ', time.time()-t1)
                 t1=time.time()
 
-                if(early_stop.stop(valid_loss)):
+                if(early_stop.stop(valid_loss,current_accuracy,ASR  )):
                     print('end the training early')
                     terminate_due_to_early = True
             
