@@ -8,8 +8,8 @@ valid_data_tr: 'all_data/en_val_tr'
 manualSeed: 1111
 workers: 2
 batch_size: 32 #32
-num_iter: 7000
-valInterval: 700
+num_iter: 12000
+valInterval: 1200
 saved_model: '' #'saved_models/en_filtered/iter_300000.pth'
 FT: False
 optim: False # default is Adadelta
