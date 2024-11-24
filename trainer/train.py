@@ -47,7 +47,7 @@ class EarlyStopping:
             
         if val_loss >= self.lowest_val_loss:
             self.counter += 1
-            self.lowest_val_loss = val_loss
+            self.lowest_val_loss = val_loss #This is to make sure it only triggers if val_loss keeps increasing
             if self.counter > self.limit:
                 return True
         elif val_loss < self.lowest_val_loss:
