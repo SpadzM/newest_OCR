@@ -53,7 +53,7 @@ class EarlyStopping:
         elif val_loss < self.lowest_val_loss:
             self.lowest_val_loss = val_loss
             self.counter = 0
-        if accuracy >= 99.9 and ASR >= 99.9:
+        if accuracy >= 99.0 and ASR >= 99.0:
             return True
         return False        
 
